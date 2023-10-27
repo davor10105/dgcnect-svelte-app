@@ -1,0 +1,212 @@
+<script>
+	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
+	import { Tabs, TabItem, Spinner } from 'flowbite-svelte';
+	import { SpeedDial, SpeedDialButton, Card } from 'flowbite-svelte';
+	import { ArrowsRepeatOutline, CheckSolid } from 'flowbite-svelte-icons';
+
+	import {
+		Table,
+		TableBody,
+		TableBodyCell,
+		TableBodyRow,
+		TableHead,
+		TableHeadCell,
+		Checkbox
+	} from 'flowbite-svelte';
+
+	export let data;
+
+	let isLoading = false;
+	/**
+	 * @type {string[]}
+	 */
+	let stopWords = [];
+	async function printCheckedCheckboxes() {
+		stopWords = [];
+		console.log('MIU');
+		var checked = document.querySelectorAll('.select-checkbox:checked');
+
+		checked.forEach((elem) => {
+			// @ts-ignore
+			stopWords.push(elem.value);
+		});
+		console.log(stopWords);
+		isLoading = true;
+		const processingTraining = await (async () => {
+			const response = await fetch(
+				`http://localhost:7000/dgcnect/retrain_country/${data.country}`,
+				{
+					method: 'POST',
+					body: JSON.stringify({
+						StopWords: stopWords
+					}),
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8'
+					}
+				}
+			);
+			return await response.json();
+		})();
+		isLoading = false;
+		window.location.href = `/${data.country}/global`;
+	}
+</script>
+
+<Tabs>
+	<a href="/{data.country}">
+		<TabItem title="Local Explanation" />
+	</a>
+
+	<a href="/{data.country}/global">
+		<TabItem open title="Global Explanation">
+			<div class="intro">
+				<img class="documentsImage" src="/src/lib/assets/earth-globe.png" alt="Globe Icon" />
+				<h2 class="tenderChoiceExplanation">
+					This is a global token importance list for the currently trained model <br />
+					You can disable unwanted tokens by selecting "DELETE" and retraining the model
+				</h2>
+			</div>
+			<div class="tables">
+				<div class="topTable">
+					<h1>Positive Tokens</h1>
+					<Table hoverable={true}>
+						<TableHead class="bg-red-300">
+							<TableBodyCell>Token</TableBodyCell>
+							<TableHeadCell>Token Value</TableHeadCell>
+							<TableHeadCell>Delete</TableHeadCell>
+						</TableHead>
+						<TableBody>
+							{#each data.global_details.TopWords as topWord}
+								<TableBodyRow>
+									<TableBodyCell>{topWord[0]}</TableBodyCell>
+									<TableBodyCell>{topWord[1]}</TableBodyCell>
+									<TableBodyCell>
+										<Checkbox class="select-checkbox" value={topWord[0]} />
+									</TableBodyCell>
+								</TableBodyRow>
+							{/each}
+						</TableBody>
+					</Table>
+				</div>
+
+				<div class="bottomTable">
+					<h1>Negative Tokens</h1>
+					<Table hoverable={true}>
+						<TableHead class="bg-blue-300">
+							<TableBodyCell>Token</TableBodyCell>
+							<TableHeadCell>Token Value</TableHeadCell>
+							<TableHeadCell>Delete</TableHeadCell>
+						</TableHead>
+						<TableBody>
+							{#each data.global_details.BottomWords as botWord}
+								<TableBodyRow>
+									<TableBodyCell>{botWord[0]}</TableBodyCell>
+									<TableBodyCell>{botWord[1]}</TableBodyCell>
+									<TableBodyCell>
+										<Checkbox class="select-checkbox" value={botWord[0]} />
+									</TableBodyCell>
+								</TableBodyRow>
+							{/each}
+						</TableBody>
+					</Table>
+				</div>
+			</div>
+		</TabItem>
+	</a>
+</Tabs>
+
+<div class="speedDial">
+	<SpeedDial color="blue" defaultClass="fixed right-8 bottom-8" pill={true}>
+		<ArrowsRepeatOutline slot="icon" class="w-8 h-8 text-white" />
+		Rerun Training
+		<SpeedDialButton name="Rerun" class="bg-green-500" on:click={printCheckedCheckboxes}>
+			<CheckSolid class="w-5 h-5 text-white" />
+		</SpeedDialButton>
+	</SpeedDial>
+</div>
+
+{#if isLoading}
+	<div class="spinnerBackground">
+		<Spinner class="w-24 h-24" />
+		<p class="spinnerText">Training the model, this may take a few minutes...</p>
+	</div>
+{/if}
+
+<style>
+	.tables {
+		display: flex;
+		flex-direction: row;
+		z-index: -1;
+	}
+
+	.speedDial {
+		z-index: 10;
+	}
+
+	.intro {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		padding: 20px;
+		background-color: white;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		border-radius: 10px;
+		margin: 10px;
+	}
+	.documentsImage {
+		height: 8vw;
+		width: auto;
+	}
+	.tenderChoiceExplanation {
+		font-size: 16px;
+		color: grey;
+		margin-left: 80px;
+	}
+
+	.spinnerBackground {
+		z-index: 100;
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		top: 0px;
+		left: 0px;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+
+	.spinnerText {
+		font-size: 24px;
+		margin-top: 20px;
+		color: black;
+		text-align: center;
+	}
+
+	.topTable {
+		width: 50%;
+		padding: 20px;
+		background-color: white;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		border-radius: 10px;
+		margin: 10px;
+	}
+
+	.bottomTable {
+		width: 50%;
+		padding: 20px;
+		background-color: white;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		border-radius: 10px;
+		margin: 10px;
+	}
+
+	h1 {
+		color: grey;
+		font-size: 22px;
+		text-align: center;
+		padding-bottom: 20px;
+	}
+</style>

@@ -1,0 +1,110 @@
+<script>
+	import { Card, Button, Toggle } from 'flowbite-svelte';
+	export let data;
+</script>
+
+<div class="navigationInfo">
+	<div class="introDiv">
+		<p class="infoText">
+			<img
+				src="/src/lib/assets/european_commission.png"
+				class="h-24 mr-8"
+				alt="EU Commision logo"
+			/>DG CNECT - DG for Communications Networks, Content and Technology
+		</p>
+		<p class="longerIntroText">
+			The purpose of the Project is to conduct the second round of benchmarking to measure the
+			progress across different countries in Europe on implementing national policy frameworks and
+			investments on innovation procurement, across sectors of public interest and across strategic
+			expenditure categories, such as ICT. The purpose of the Project is also to collect for the
+			second time, not only quantitative but also qualitative, evidence about the implementation
+			progress, in a way that enables benchmarking progress in a comparable manner across different
+			countries and enables analysing trends compared with the first benchmarking round. The third
+			objective of the Project is to provide the data that is collected in a way that it can be
+			integrated easily into relevant European official yearly innovation statistics, scoreboards
+			and benchmarking exercises across Europe (in particular the DESI and EDPR for what concerns
+			the ICT sector and the EU Innovation Scoreboard and ERA Scoreboards).
+		</p>
+	</div>
+	<div class="countryNavigation">
+		<div class="selectCountry">Select a country to begin</div>
+		<div />
+		<p>
+			{#each data.countries as countryInfo}
+				<Card
+					img="/{countryInfo.Country2Alpha}.webp"
+					href="/{countryInfo.Country2Alpha}"
+					horizontal
+					class="mb-4 mt-5"
+				>
+					<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+						{countryInfo.CountryName}
+					</h5>
+					<p class="mb-3 font-normal text-gray-500 dark:text-gray-400 leading-tight">
+						Total number of tenders: {countryInfo.Metadata.NumExamples}
+					</p>
+					<p class="mb-3 font-normal text-gray-500 dark:text-gray-400 leading-tight">
+						Number of innovative: {countryInfo.Metadata.NumInnovative}
+					</p>
+					<p class="mb-3 font-normal text-gray-500 dark:text-gray-400 leading-tight">
+						Number of non-innovative: {countryInfo.Metadata.NumNonInnovative}
+					</p>
+				</Card>
+			{/each}
+		</p>
+	</div>
+</div>
+
+<style>
+	:root {
+		background-color: #f3f4f6;
+	}
+
+	.navigationInfo {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: center;
+		background-color: white;
+		margin: 20px;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		border-radius: 10px;
+	}
+
+	.introDiv {
+		flex: 2;
+		padding: 50px;
+	}
+
+	.infoText {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		color: rgb(95, 95, 95);
+		font-size: 24px;
+	}
+
+	.selectCountry {
+		text-align: center;
+		color: rgb(95, 95, 95);
+		font-size: 24px;
+	}
+
+	.longerIntroText {
+		text-align: justify;
+		color: grey;
+		font-size: 20px;
+		margin-top: 20px;
+	}
+
+	.countryNavigation {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+		margin: 50px;
+	}
+</style>

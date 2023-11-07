@@ -55,14 +55,17 @@
 		isLoading = true;
 		const processingTraining = await (async () => {
 			const response = await fetch(
-				`http://localhost:7000/dgcnect/retrain_country/${data.country}`,
+				`http://4.245.209.171:7000/dgcnect/retrain_country/${data.country}`,
 				{
 					method: 'POST',
 					body: JSON.stringify({
 						StopWords: stopWords
 					}),
 					headers: {
-						'Content-type': 'application/json; charset=UTF-8'
+						'Content-type': 'application/json; charset=UTF-8',
+						'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+						'Access-Control-Allow-Origin': '*',
+						'Access-Control-Allow-Headers': '*'
 					}
 				}
 			);

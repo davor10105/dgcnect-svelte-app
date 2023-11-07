@@ -1,13 +1,20 @@
 <script>
+	// @ts-nocheck
+
 	import { Card, Button, Toggle } from 'flowbite-svelte';
 	export let data;
+
+	let countryToImageURL = {
+		HR: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Croatia.svg/500px-Flag_of_Croatia.svg.png',
+		BE: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Belgium.svg/500px-Flag_of_Belgium.svg.png'
+	};
 </script>
 
 <div class="navigationInfo">
 	<div class="introDiv">
 		<p class="infoText">
 			<img
-				src="/src/lib/assets/european_commission.png"
+				src="https://commission.europa.eu/themes/contrib/oe_theme/dist/ec/images/logo/positive/logo-ec--en.svg"
 				class="h-24 mr-8"
 				alt="EU Commision logo"
 			/>DG CNECT - DG for Communications Networks, Content and Technology
@@ -32,7 +39,7 @@
 		<p>
 			{#each data.countries as countryInfo}
 				<Card
-					img="/{countryInfo.Country2Alpha}.webp"
+					img={countryToImageURL[countryInfo.Country2Alpha]}
 					href="/{countryInfo.Country2Alpha}"
 					horizontal
 					class="mb-4 mt-5"

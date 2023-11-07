@@ -61,7 +61,11 @@
 		<TabItem open title="Local Explanation">
 			<div class="countryDetails">
 				<div class="intro">
-					<img class="documentsImage" src="/src/lib/assets/documents.png" alt="Documents Icon" />
+					<img
+						class="documentsImage"
+						src="https://cdn-icons-png.flaticon.com/128/1037/1037308.png"
+						alt="Documents Icon"
+					/>
 					<h2 class="tenderChoiceExplanation">
 						Please choose a tender ID from the following categories based on annotation - model
 						prediction matching: <br />

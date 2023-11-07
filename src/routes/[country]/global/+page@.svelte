@@ -13,8 +13,29 @@
 		TableHeadCell,
 		Checkbox
 	} from 'flowbite-svelte';
+	import { Drawer, CloseButton } from 'flowbite-svelte';
+	import { InfoCircleSolid, ArrowRightOutline } from 'flowbite-svelte-icons';
+	import { sineIn } from 'svelte/easing';
+	let hidden1 = true;
+	let transitionParams = {
+		x: -320,
+		duration: 200,
+		easing: sineIn
+	};
 
 	export let data;
+	/**
+	 * @type {any[]}
+	 */
+	let tenderAppears = [];
+
+	/**
+	 * @param {any} word
+	 */
+	function showTenderAppears(word) {
+		tenderAppears = word[2];
+		hidden1 = false;
+	}
 
 	let isLoading = false;
 	/**
@@ -60,7 +81,11 @@
 	<a href="/{data.country}/global">
 		<TabItem open title="Global Explanation">
 			<div class="intro">
-				<img class="documentsImage" src="/src/lib/assets/earth-globe.png" alt="Globe Icon" />
+				<img
+					class="documentsImage"
+					src="https://cdn-icons-png.flaticon.com/128/587/587874.png"
+					alt="Globe Icon"
+				/>
 				<h2 class="tenderChoiceExplanation">
 					This is a global token importance list for the currently trained model <br />
 					You can disable unwanted tokens by selecting "DELETE" and retraining the model
@@ -78,7 +103,11 @@
 						<TableBody>
 							{#each data.global_details.TopWords as topWord}
 								<TableBodyRow>
-									<TableBodyCell>{topWord[0]}</TableBodyCell>
+									<TableBodyCell
+										><Button color="light" on:click={() => showTenderAppears(topWord)}
+											>{topWord[0]}</Button
+										></TableBodyCell
+									>
 									<TableBodyCell>{topWord[1]}</TableBodyCell>
 									<TableBodyCell>
 										<Checkbox class="select-checkbox" value={topWord[0]} />
@@ -100,7 +129,11 @@
 						<TableBody>
 							{#each data.global_details.BottomWords as botWord}
 								<TableBodyRow>
-									<TableBodyCell>{botWord[0]}</TableBodyCell>
+									<TableBodyCell
+										><Button color="light" on:click={() => showTenderAppears(botWord)}
+											>{botWord[0]}</Button
+										></TableBodyCell
+									>
 									<TableBodyCell>{botWord[1]}</TableBodyCell>
 									<TableBodyCell>
 										<Checkbox class="select-checkbox" value={botWord[0]} />
@@ -124,6 +157,20 @@
 		</SpeedDialButton>
 	</SpeedDial>
 </div>
+
+<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden1} id="sidebar1">
+	<div class="flex items-center">
+		<CloseButton on:click={() => (hidden1 = true)} class="mb-4 dark:text-white" />
+	</div>
+	<p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
+		This token appeared in the following tenders:
+	</p>
+	<div class="grid grid-cols-2 gap-4">
+		{#each tenderAppears as tenderAppear}
+			<Button color="light" href="/{data.country}/{tenderAppear}">{tenderAppear}</Button>
+		{/each}
+	</div>
+</Drawer>
 
 {#if isLoading}
 	<div class="spinnerBackground">

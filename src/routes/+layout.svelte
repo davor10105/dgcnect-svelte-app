@@ -7,7 +7,7 @@
 	<NavBrand href="/">
 		<a href="/"
 			><img
-				src="/src/lib/assets/european_commission.png"
+				src="https://commission.europa.eu/themes/contrib/oe_theme/dist/ec/images/logo/positive/logo-ec--en.svg"
 				class="mr-3 h-6 sm:h-9"
 				alt="EU Commision logo"
 			/></a

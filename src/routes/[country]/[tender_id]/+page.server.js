@@ -1,4 +1,4 @@
-/** @type {import('./$types').PageLoad} */
+// @ts-ignore
 export async function load({ params }) {
     const data = (async () => {
         const response = await fetch(`http://localhost:7000/dgcnect/tender_details/${params.country}/${params.tender_id}`);

@@ -8,5 +8,8 @@ export default defineConfig({
 	preview: {
 		port: 5000,
 	},
+	dev: {
+		port: 5000,
+	},
 	plugins: [sveltekit()]
 });

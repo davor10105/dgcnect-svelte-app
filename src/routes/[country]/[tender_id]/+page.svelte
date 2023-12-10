@@ -1,5 +1,5 @@
 <script>
-	import { SpeedDial, SpeedDialButton, Card } from 'flowbite-svelte';
+	import { SpeedDial, SpeedDialButton, Card, Button } from 'flowbite-svelte';
 	import {
 		ArrowsRepeatOutline,
 		CheckSolid,
@@ -95,7 +95,16 @@
 
 <div class="localExplainability">
 	<div class="tokenImportance">
-		<h2 class="subtitle">Token Importance</h2>
+		<div class="subtitleRow">
+			<h2 class="subtitle">Token Importance</h2>
+			<Button
+				class="popoutButton"
+				on:click={() => {
+					window.open(`/popout/${data.country}/${data.tender_id}`, '_blank');
+				}}>Popout</Button
+			>
+		</div>
+
 		<p>
 			{#each data.tender_details.WordScores as wordScore, index}
 				<span
@@ -120,6 +129,12 @@
 	.localExplainability {
 		display: flex;
 		flex-direction: row;
+	}
+
+	.subtitleRow {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 	}
 
 	.modelLabelPrediction {
@@ -179,5 +194,6 @@
 		color: grey;
 		text-align: center;
 		margin-bottom: 10px;
+		flex: 3;
 	}
 </style>

@@ -9,8 +9,10 @@
 	/**
 	 * @type {any}
 	 */
+
+	export let data;
+
 	let selectedConfusionEntry = 'TruePositive';
-	let selectedTenderID;
 
 	let confusionEntries = [
 		{ value: 'TruePositive', name: 'True Positive' },
@@ -18,7 +20,6 @@
 		{ value: 'FalsePositive', name: 'False Positive' },
 		{ value: 'FalseNegative', name: 'False Negative' }
 	];
-	export let data;
 
 	/**
 	 * @type {{ value: any; name: any; }[]}
@@ -39,6 +40,30 @@
 	data.country_details.Details.FalseNegative.forEach((/** @type {any} */ tenderID) => {
 		falseNegatives.push({ value: tenderID, name: tenderID });
 	});
+
+	let selectedTenderID;
+	if (data.tender_id === undefined) {
+		console.log('not set');
+	} else {
+		console.log('set');
+		selectedTenderID = data.tender_id;
+		let confusionArrays = [truePositives, trueNegatives, falsePositives, falseNegatives];
+		let confusionNames = ['TruePositive', 'TrueNegative', 'FalsePositive', 'FalseNegative'];
+		let foundItem = false;
+		for (let cIndex = 0; cIndex < confusionArrays.length; cIndex++) {
+			const confusionArray = confusionArrays[cIndex];
+			const confusionName = confusionNames[cIndex];
+			for (let index = 0; index < confusionArray.length; index++) {
+				const element = confusionArray[index];
+				if (element['value'] === selectedTenderID) {
+					selectedConfusionEntry = confusionName;
+					foundItem = true;
+					break;
+				}
+			}
+			if (foundItem) break;
+		}
+	}
 
 	let selectedTenderIDs = {
 		TruePositive: truePositives,

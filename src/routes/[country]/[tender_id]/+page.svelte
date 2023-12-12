@@ -1,5 +1,5 @@
 <script>
-	import { SpeedDial, SpeedDialButton, Card, Button } from 'flowbite-svelte';
+	import { SpeedDial, SpeedDialButton, Card, Button, Spinner } from 'flowbite-svelte';
 	import {
 		ArrowsRepeatOutline,
 		CheckSolid,
@@ -154,6 +154,13 @@
 	</div>
 </div>
 
+{#if isLoading}
+	<div class="spinnerBackground">
+		<Spinner class="w-24 h-24" />
+		<p class="spinnerText">Training the model, this may take a few minutes...</p>
+	</div>
+{/if}
+
 <style>
 	.localExplainability {
 		display: flex;
@@ -224,5 +231,26 @@
 		text-align: center;
 		margin-bottom: 10px;
 		flex: 3;
+	}
+
+	.spinnerBackground {
+		z-index: 100;
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		top: 0px;
+		left: 0px;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+
+	.spinnerText {
+		font-size: 24px;
+		margin-top: 20px;
+		color: black;
+		text-align: center;
 	}
 </style>

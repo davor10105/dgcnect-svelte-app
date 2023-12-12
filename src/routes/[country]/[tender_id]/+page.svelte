@@ -36,6 +36,29 @@
 		isLoading = false;
 		window.location.href = `/${data.country}/${data.tender_id}`;
 	}
+
+	async function retrainCountry() {
+		isLoading = true;
+		const processingTraining = await (async () => {
+			const response = await fetch(
+				`http://4.245.209.171:7000/dgcnect/retrain_country/${data.country}`,
+				{
+					method: 'POST',
+					body: JSON.stringify({
+						StopWords: []
+					}),
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8',
+						'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+						'Access-Control-Allow-Origin': '*',
+						'Access-Control-Allow-Headers': '*'
+					}
+				}
+			);
+			return await response.json();
+		})();
+		isLoading = false;
+	}
 </script>
 
 <SpeedDial color="blue" defaultClass="fixed right-8 bottom-8" pill={true}>
@@ -58,7 +81,13 @@
 	>
 		<MinusSolid class="w-5 h-5 text-white" />
 	</SpeedDialButton>
-	<SpeedDialButton name="Retrain Model" class="bg-yellow-300">
+	<SpeedDialButton
+		on:click={() => {
+			retrainCountry();
+		}}
+		name="Retrain Model"
+		class="bg-yellow-300"
+	>
 		<ArrowsRepeatOutline class="w-5 h-5 text-white" />
 	</SpeedDialButton>
 </SpeedDial>

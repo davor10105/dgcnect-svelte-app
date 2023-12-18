@@ -74,7 +74,7 @@
 
 	const viewTender = () => {
 		if (selectedConfusionEntry && selectedTenderID) {
-			window.location.href = `/${data.country}/${selectedTenderID}`;
+			window.location.href = `/home/${data.country}/${selectedTenderID}`;
 		} else {
 			alert('Please select a valid tender ID');
 		}
@@ -82,7 +82,7 @@
 </script>
 
 <Tabs>
-	<a href="/{data.country}">
+	<a href="/home/{data.country}">
 		<TabItem open title="Local Explanation">
 			<div class="countryDetails">
 				<div class="intro">
@@ -128,7 +128,7 @@
 		</TabItem>
 	</a>
 
-	<a href="/{data.country}/global">
+	<a href="/home/{data.country}/global">
 		<TabItem title="Global Explanation" />
 	</a>
 </Tabs>

@@ -129,7 +129,11 @@
 			<Button
 				class="popoutButton"
 				on:click={() => {
-					window.open(`/popout/${data.country}/${data.tender_id}`, '_blank');
+					window.open(
+						`/home/popout/${data.country}/${data.tender_id}`,
+						'_blank',
+						'width=512px,height=512px'
+					);
 				}}>Popout</Button
 			>
 		</div>
@@ -157,7 +161,7 @@
 {#if isLoading}
 	<div class="spinnerBackground">
 		<Spinner class="w-24 h-24" />
-		<p class="spinnerText">Training the model, this may take a few minutes...</p>
+		<p class="spinnerText">This may take a while...</p>
 	</div>
 {/if}
 

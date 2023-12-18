@@ -77,11 +77,11 @@
 </script>
 
 <Tabs>
-	<a href="/{data.country}">
+	<a href="/home/{data.country}">
 		<TabItem title="Local Explanation" />
 	</a>
 
-	<a href="/{data.country}/global">
+	<a href="/home/{data.country}/global">
 		<TabItem open title="Global Explanation">
 			<div class="intro">
 				<img

@@ -60,7 +60,7 @@
 			{#each data.countries as countryInfo}
 				<Card
 					img={countryToImageURL[countryInfo.Country2Alpha]}
-					href="/{countryInfo.Country2Alpha}"
+					href="/home/{countryInfo.Country2Alpha}"
 					horizontal
 					class="mb-4 mt-5"
 				>

@@ -1,8 +1,10 @@
+// @ts-nocheck
 import { redirect } from '@sveltejs/kit';
 import { USERS } from '$lib/server/secrets.js';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ cookies }) {
+
+export const load = (async ({ cookies }) => {
+    console.log('layout cookie');
 
     let username = cookies.get('username');
     let password = cookies.get('password');
@@ -15,10 +17,7 @@ export async function load({ cookies }) {
             break;
         }
     }
-    if (loggedIn) {
-        throw redirect(303, '/home');
-    } else {
+    if (!loggedIn) {
         throw redirect(303, '/login');
     }
-
-}
+});

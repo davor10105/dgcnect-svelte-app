@@ -132,7 +132,7 @@
 					window.open(
 						`/home/popout/${data.country}/${data.tender_id}`,
 						'_blank',
-						'width=512px,height=512px'
+						'width=512px,height=512px,menubar=true,toolbar=true,titlebar=true'
 					);
 				}}>Popout</Button
 			>

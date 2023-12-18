@@ -130,7 +130,7 @@
 				class="popoutButton"
 				on:click={() => {
 					window.open(
-						`/popout/${data.country}/${data.tender_id}`,
+						`/home/popout/${data.country}/${data.tender_id}`,
 						'_blank',
 						'width=512px,height=512px'
 					);

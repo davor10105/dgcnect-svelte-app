@@ -126,12 +126,7 @@
 	<div class="tokenImportance">
 		<div class="subtitleRow">
 			<h2 class="subtitle">Token Importance</h2>
-			<Button
-				class="popoutButton"
-				on:click={() => {
-					window.open(`/home/popout/${data.country}/${data.tender_id}`, '_blank');
-				}}>Popout</Button
-			>
+			<a href={`/home/popout/${data.country}/${data.tender_id}`}><Button>Popout</Button></a>
 		</div>
 
 		<p>

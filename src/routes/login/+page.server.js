@@ -32,8 +32,8 @@ export const actions = {
 
         for (const user of USERS) {
             if (username === user['username'] && password === user['password']) {
-                cookies.set('username', username);
-                cookies.set('password', password);
+                cookies.set('username', username, {secure: false, path: '/',});
+                cookies.set('password', password, {secure: false, path: '/',});
                 return { wrongLogin: false };
             }
         }

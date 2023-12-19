@@ -72,7 +72,7 @@
 			return await response.json();
 		})();
 		isLoading = false;
-		window.location.href = `/${data.country}/global`;
+		window.location.href = `/home/${data.country}/global`;
 	}
 </script>
 

@@ -34,7 +34,7 @@
 			return await response.json();
 		})();
 		isLoading = false;
-		window.location.href = `/${data.country}/${data.tender_id}`;
+		window.location.href = `/home/${data.country}/${data.tender_id}`;
 	}
 
 	async function retrainCountry() {

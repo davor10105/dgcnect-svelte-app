@@ -7,6 +7,8 @@
 		LightbulbSolid
 	} from 'flowbite-svelte-icons';
 
+	import { PUBLIC_API_IP } from '$env/static/public';
+
 	export let data;
 
 	let isLoading = false;
@@ -17,7 +19,7 @@
 		isLoading = true;
 		const processingTraining = await (async () => {
 			const response = await fetch(
-				`http://4.245.209.171:7000/dgcnect/annotate_tender/${data.country}/${data.tender_id}`,
+				`${PUBLIC_API_IP}/dgcnect/annotate_tender/${data.country}/${data.tender_id}`,
 				{
 					method: 'POST',
 					body: JSON.stringify({
@@ -40,21 +42,18 @@
 	async function retrainCountry() {
 		isLoading = true;
 		const processingTraining = await (async () => {
-			const response = await fetch(
-				`http://4.245.209.171:7000/dgcnect/retrain_country/${data.country}`,
-				{
-					method: 'POST',
-					body: JSON.stringify({
-						StopWords: []
-					}),
-					headers: {
-						'Content-type': 'application/json; charset=UTF-8',
-						'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-						'Access-Control-Allow-Origin': '*',
-						'Access-Control-Allow-Headers': '*'
-					}
+			const response = await fetch(`${PUBLIC_API_IP}/dgcnect/retrain_country/${data.country}`, {
+				method: 'POST',
+				body: JSON.stringify({
+					StopWords: []
+				}),
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+					'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': '*'
 				}
-			);
+			});
 			return await response.json();
 		})();
 		isLoading = false;

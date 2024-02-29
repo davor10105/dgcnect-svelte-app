@@ -16,6 +16,7 @@
 	import { Drawer, CloseButton } from 'flowbite-svelte';
 	import { InfoCircleSolid, ArrowRightOutline } from 'flowbite-svelte-icons';
 	import { sineIn } from 'svelte/easing';
+	import { PUBLIC_API_IP } from '$env/static/public';
 	let hidden1 = true;
 	let transitionParams = {
 		x: -320,
@@ -42,33 +43,42 @@
 	 * @type {string[]}
 	 */
 	let stopWords = [];
+	/**
+	 * @type {any[]}
+	 */
+	let deletedWords = [];
 	async function printCheckedCheckboxes() {
 		stopWords = [];
+		deletedWords = [];
 		console.log('MIU');
 		var checked = document.querySelectorAll('.select-checkbox:checked');
+		var deletedChecked = document.querySelectorAll('.delete-checkbox:checked');
 
 		checked.forEach((elem) => {
 			// @ts-ignore
 			stopWords.push(elem.value);
 		});
+		deletedChecked.forEach((elem) => {
+			// @ts-ignore
+			deletedWords.push(elem.value);
+		});
 		console.log(stopWords);
+		console.log(deletedWords);
 		isLoading = true;
 		const processingTraining = await (async () => {
-			const response = await fetch(
-				`http://4.245.209.171:7000/dgcnect/retrain_country/${data.country}`,
-				{
-					method: 'POST',
-					body: JSON.stringify({
-						StopWords: stopWords
-					}),
-					headers: {
-						'Content-type': 'application/json; charset=UTF-8',
-						'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-						'Access-Control-Allow-Origin': '*',
-						'Access-Control-Allow-Headers': '*'
-					}
+			const response = await fetch(`${PUBLIC_API_IP}/dgcnect/retrain_country/${data.country}`, {
+				method: 'POST',
+				body: JSON.stringify({
+					StopWords: stopWords,
+					ReEnabledWords: deletedWords
+				}),
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+					'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': '*'
 				}
-			);
+			});
 			return await response.json();
 		})();
 		isLoading = false;
@@ -93,6 +103,21 @@
 					This is a global token importance list for the currently trained model <br />
 					You can disable unwanted tokens by selecting "DELETE" and retraining the model
 				</h2>
+			</div>
+			<div class="deletedWords">
+				<h2 class="tenderChoiceExplanation">
+					This list contains previously deleted words. You can re-enable them by selecting the
+					checkmark next to the word and retraining the model
+				</h2>
+				<br />
+				<div class="deletedWordList">
+					{#each data.global_details.DeletedWords as deletedWord}
+						<div class="deletedWord">
+							<h2 style="margin-right: 5px;">{deletedWord}</h2>
+							<Checkbox class="delete-checkbox" value={deletedWord} />
+						</div>
+					{/each}
+				</div>
 			</div>
 			<div class="tables">
 				<div class="topTable">
@@ -170,7 +195,7 @@
 	</p>
 	<div class="grid grid-cols-2 gap-4">
 		{#each tenderAppears as tenderAppear}
-			<Button color="light" href="/{data.country}/{tenderAppear}">{tenderAppear}</Button>
+			<Button color="light" href="/home/{data.country}/{tenderAppear}">{tenderAppear}</Button>
 		{/each}
 	</div>
 </Drawer>
@@ -203,6 +228,7 @@
 		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 		border-radius: 10px;
 		margin: 10px;
+		color: black;
 	}
 	.documentsImage {
 		height: 8vw;
@@ -212,6 +238,34 @@
 		font-size: 16px;
 		color: grey;
 		margin-left: 80px;
+	}
+
+	.deletedWords {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 20px;
+		flex-wrap: wrap;
+		background-color: white;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		border-radius: 10px;
+		margin: 10px;
+	}
+
+	.deletedWordList {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.deletedWord {
+		display: flex;
+		flex-direction: row;
+		box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
+		border-radius: 10px;
+		padding: 8px;
+		margin-right: 5px;
 	}
 
 	.spinnerBackground {

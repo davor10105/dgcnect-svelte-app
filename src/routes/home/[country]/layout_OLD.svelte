@@ -5,7 +5,6 @@
 	import { Tabs, TabItem } from 'flowbite-svelte';
 	import { EyeOutline } from 'flowbite-svelte-icons';
 	import { Label, Select } from 'flowbite-svelte';
-	import VirtualList from '@sveltejs/svelte-virtual-list';
 
 	/**
 	 * @type {any}
@@ -19,9 +18,7 @@
 		{ value: 'TruePositive', name: 'True Positive' },
 		{ value: 'TrueNegative', name: 'True Negative' },
 		{ value: 'FalsePositive', name: 'False Positive' },
-		{ value: 'FalseNegative', name: 'False Negative' },
-		{ value: 'UnlabeledPositive', name: 'Unlabeled Positive' },
-		{ value: 'UnlabeledNegative', name: 'Unlabeled Negative' }
+		{ value: 'FalseNegative', name: 'False Negative' }
 	];
 
 	/**
@@ -43,14 +40,6 @@
 	data.country_details.Details.FalseNegative.forEach((/** @type {any} */ tenderID) => {
 		falseNegatives.push({ value: tenderID, name: tenderID });
 	});
-	let unlabeledPositives = [];
-	data.country_details.Details.UnlabeledPositive.forEach((/** @type {any} */ tenderID) => {
-		unlabeledPositives.push({ value: tenderID, name: tenderID });
-	});
-	let unlabeledNegatives = [];
-	data.country_details.Details.UnlabeledNegative.forEach((/** @type {any} */ tenderID) => {
-		unlabeledNegatives.push({ value: tenderID, name: tenderID });
-	});
 
 	let selectedTenderID;
 	if (data.tender_id === undefined) {
@@ -58,22 +47,8 @@
 	} else {
 		console.log('set');
 		selectedTenderID = data.tender_id;
-		let confusionArrays = [
-			truePositives,
-			trueNegatives,
-			falsePositives,
-			falseNegatives,
-			unlabeledPositives,
-			unlabeledNegatives
-		];
-		let confusionNames = [
-			'TruePositive',
-			'TrueNegative',
-			'FalsePositive',
-			'FalseNegative',
-			'UnlabeledPositive',
-			'UnlabeledNegative'
-		];
+		let confusionArrays = [truePositives, trueNegatives, falsePositives, falseNegatives];
+		let confusionNames = ['TruePositive', 'TrueNegative', 'FalsePositive', 'FalseNegative'];
 		let foundItem = false;
 		for (let cIndex = 0; cIndex < confusionArrays.length; cIndex++) {
 			const confusionArray = confusionArrays[cIndex];
@@ -94,9 +69,7 @@
 		TruePositive: truePositives,
 		TrueNegative: trueNegatives,
 		FalsePositive: falsePositives,
-		FalseNegative: falseNegatives,
-		UnlabeledPositive: unlabeledPositives,
-		UnlabeledNegative: unlabeledNegatives
+		FalseNegative: falseNegatives
 	};
 
 	const viewTender = () => {
@@ -134,20 +107,21 @@
 							<Select class="mt-2" items={confusionEntries} bind:value={selectedConfusionEntry} />
 						</Label>
 					</div>
-				</div>
-
-				<div class="virtualList">
-					<Label>Select a tender ID</Label>
-					<VirtualList height="500px" items={selectedTenderIDs[selectedConfusionEntry]} let:item>
-						<a
-							class="innerVirtualList"
-							target="_blank"
-							rel="noreferrer"
-							href="/home/{data.country}/{item.name}"
+					<div class="tenderSelection">
+						<Label>
+							Select a tender ID
+							<Select
+								class="mt-2"
+								items={selectedTenderIDs[selectedConfusionEntry]}
+								bind:value={selectedTenderID}
+							/>
+						</Label>
+					</div>
+					<div class="viewButton">
+						<Button on:click={viewTender} class="bg-blue-500"
+							>View <EyeOutline class="ml-2" /></Button
 						>
-							{selectedTenderIDs[selectedConfusionEntry].indexOf(item) + 1}: {item.name}
-						</a>
-					</VirtualList>
+					</div>
 				</div>
 			</div>
 			<slot />
@@ -160,15 +134,6 @@
 </Tabs>
 
 <style>
-	.virtualList {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		margin: 20px;
-		padding: 20px;
-	}
-
 	.countryDetails {
 		margin: 20px;
 		background-color: white;

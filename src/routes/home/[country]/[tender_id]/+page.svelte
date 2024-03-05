@@ -100,6 +100,11 @@
 				<LightbulbSolid class="text-green-500" />
 				<span class="text-green-500 text-lg">Innovative</span>
 			</div>
+		{:else if data.tender_details.Label == 2}
+			<div class="inononDiv">
+				<LightbulbSolid class="text-grey-500" />
+				<span class="text-grey-500 text-lg">Not Labeled</span>
+			</div>
 		{:else}
 			<div class="inononDiv">
 				<LightbulbSolid class="text-red-500" />
@@ -111,11 +116,17 @@
 			<div class="inononDiv">
 				<LightbulbSolid class="text-green-500" />
 				<span class="text-green-500 text-lg">Innovative</span>
+				<span class="text-green-500 text-lg"
+					>({Math.round(data.tender_details.PredictionProbability * 100)}%)</span
+				>
 			</div>
 		{:else}
 			<div class="inononDiv">
 				<LightbulbSolid class="text-red-500" />
 				<span class="text-red-500 text-lg">Non-Innovative</span>
+				<span class="text-red-500 text-lg"
+					>({Math.round(data.tender_details.PredictionProbability * 100)}%)</span
+				>
 			</div>
 		{/if}
 	</div>

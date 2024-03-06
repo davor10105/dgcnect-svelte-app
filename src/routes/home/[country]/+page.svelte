@@ -145,7 +145,9 @@
 							rel="noreferrer"
 							href="/home/{data.country}/{item.name}"
 						>
-							{selectedTenderIDs[selectedConfusionEntry].indexOf(item) + 1}: {item.name}
+							<div class="tenderChoiceDiv">
+								{selectedTenderIDs[selectedConfusionEntry].indexOf(item) + 1}: {item.name}
+							</div>
 						</a>
 					</VirtualList>
 				</div>
@@ -167,6 +169,19 @@
 		align-items: center;
 		margin: 20px;
 		padding: 20px;
+	}
+
+	.tenderChoiceDiv {
+		display: flex;
+		flex-direction: row;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		border-radius: 10px;
+		justify-content: center;
+		align-items: center;
+		padding: 2px;
+		margin: 2px;
+		width: 200px;
+		height: 50px;
 	}
 
 	.countryDetails {

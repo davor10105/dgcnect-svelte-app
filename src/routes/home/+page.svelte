@@ -30,7 +30,8 @@
 		RO: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Romania.svg/512px-Flag_of_Romania.svg.png',
 		MT: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/512px-Flag_of_Malta.svg.png',
 		PL: 'https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/512px-Flag_of_Poland.svg.png',
-		IT: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/512px-Flag_of_Italy.svg.png'
+		IT: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/512px-Flag_of_Italy.svg.png',
+		FR: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/512px-Flag_of_France.svg.png'
 	};
 </script>
 

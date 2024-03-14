@@ -31,7 +31,9 @@
 		MT: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/512px-Flag_of_Malta.svg.png',
 		PL: 'https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/512px-Flag_of_Poland.svg.png',
 		IT: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/512px-Flag_of_Italy.svg.png',
-		FR: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/512px-Flag_of_France.svg.png'
+		FR: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/512px-Flag_of_France.svg.png',
+		AT: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/512px-Flag_of_Austria.svg.png',
+		LU: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/512px-Flag_of_Luxembourg.svg.png'
 	};
 </script>
 

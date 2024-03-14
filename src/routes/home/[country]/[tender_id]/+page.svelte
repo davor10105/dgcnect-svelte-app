@@ -8,7 +8,7 @@
 	} from 'flowbite-svelte-icons';
 
 	import { PUBLIC_API_IP } from '$env/static/public';
-
+	console.log(PUBLIC_API_IP)
 	export let data;
 
 	let isLoading = false;
